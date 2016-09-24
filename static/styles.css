@@ -4,6 +4,22 @@ html, body {
     padding: 0;
 }
 
+#search {
+	background-color: green;
+	float: left;
+	width: 25%;
+}
+
+#list {
+	background-color: blue;
+	clear: both;
+	float: left;
+	width: 25%;
+	height: 100%;
+}
+
 #map {
+	float: left;
+	width: 75%;
     height: 100%;
 }
