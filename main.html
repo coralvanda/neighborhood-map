@@ -1,9 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title></title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="UTF-8">
+	<title>Neighborhood Map</title>
+	<link rel="stylesheet" href="static/styles.css">
 </head>
+
 <body>
 
+    <div id="search">
+    	Search bar
+    </div>
+    <div id="list">
+    	List view
+    </div>
+
+    <div id="map">
+    </div>
+
+    <script src="static/lib/knockout-3.4.0.js"></script>
+    <script src="static/app.js"></script>
+    <script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCz4KE50vlj_IUxdao2tVokcSaN8GJIdb4&callback=initMap"></script>
 </body>
 </html>
