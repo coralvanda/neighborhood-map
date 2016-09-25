@@ -14,7 +14,11 @@
     	placeholder="Start typing here">
     </div>
     <div id="list">
-    	<p data-bind="placeList"></p>
+    	<ul data-bind="foreach: placeList">
+    		<li>
+    			<span data-bind="text: title"></span>
+    		</li>
+    	</ul>
     </div>
 
     <div id="map">
