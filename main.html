@@ -14,14 +14,15 @@
     	placeholder="Start typing here">
     </div>
     <div id="list">
-    	List view
+    	<p data-bind="placeList"></p>
     </div>
 
     <div id="map">
     </div>
 
     <script src="static/lib/knockout-3.4.0.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCz4KE50vlj_IUxdao2tVokcSaN8GJIdb4&libraries=places&">
+    </script>
     <script src="static/app.js"></script>
-    <script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCz4KE50vlj_IUxdao2tVokcSaN8GJIdb4&libraries=places&callback=initMap"></script>
 </body>
 </html>
