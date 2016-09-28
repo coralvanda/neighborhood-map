@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="viewport" 
+    content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
 	<title>Neighborhood Map</title>
 	<link rel="stylesheet" href="static/styles.css">
@@ -12,7 +13,7 @@
 	    <div id="side-bar">
 		    <div id="search">
 		    	<input id="pac-input" class="controls" type="text"
-		    	placeholder="Start typing here">
+		    	placeholder="Search">
 		    </div>
 		    <div id="list">
 		    	<ul data-bind="foreach: placeList">
@@ -20,6 +21,11 @@
 		    			<span data-bind="text: title"></span>
 		    		</li>
 		    	</ul>
+		    	<div id="burger-icon">
+		    		<div class="burger"></div>
+		    		<div class="burger"></div>
+		    		<div class="burger"></div>
+		    	</div>
 		    </div>
 	    </div>
 	    <div id="map">
