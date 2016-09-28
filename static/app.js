@@ -61,7 +61,16 @@ var view = {
 			var marker = new google.maps.Marker(location);
 			marker.setMap(map);
 		})
-	}
+	},
+
+    hideNav: function() {
+        var sideBar = document.getElementById("side-bar");
+        if (sideBar.style.display !== 'none') {
+            sideBar.style.display = 'none';
+        } else {
+            sideBar.style.display = 'block';
+        }
+    }
 };
 
 
