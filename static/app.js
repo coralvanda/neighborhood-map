@@ -68,7 +68,6 @@ var ViewModel = function() {
 var Place = function(data) {
     this.position = ko.observable(data.postiion);
     this.title = ko.observable(data.title);
-    this.animation = ko.observable(data.getAnimation())
 };
 
 
