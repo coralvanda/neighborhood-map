@@ -12,56 +12,67 @@ var autocomplete = new google.maps.places.Autocomplete(input);
 
 
 
+var model = {
+    locations: [
+        {
+        	position: {lat: -34.385, lng: 150.645},
+        	map: map,
+        	title: "A"
+        },
+        {
+        	position: {lat: -34.398, lng: 150.658},
+        	map: map,
+        	title: "B"
+        },
+        {
+        	position: {lat: -34.4, lng: 150.648},
+        	map: map,
+        	title: "C"
+        },
+        {
+        	position: {lat: -34.6, lng: 150.848},
+        	map: map,
+        	title: "D"
+        },
+        {
+        	position: {lat: -34.5, lng: 150.540},
+        	map: map,
+        	title: "E"
+        }
+    ]
+}
 
 
-var myList = [
-    {
-    	position: {lat: -34.385, lng: 150.645},
-    	map: map,
-    	title: "A"
-    },
-    {
-    	position: {lat: -34.398, lng: 150.658},
-    	map: map,
-    	title: "B"
-    },
-    {
-    	position: {lat: -34.4, lng: 150.648},
-    	map: map,
-    	title: "C"
-    },
-    {
-    	position: {lat: -34.6, lng: 150.848},
-    	map: map,
-    	title: "D"
-    },
-    {
-    	position: {lat: -34.5, lng: 150.540},
-    	map: map,
-    	title: "E"
-    }
-]
+var viewModel = function() {
+    var self = this;
 
+    this.placeList = ko.observableArray([]);
 
-var viewModel = {
-	init: function() {
-	    view.populateMarkers();
-	},
+    model.locations.forEach(function(place) {
+        self.placeList.push(place);
+        var marker = new google.maps.Marker(place);
+        marker.setMap(map);
+        marker.addListener('click', self.selectPlace);
+    });
 
-	buildList: function(itemList) {
-	    var self = this;
-	    this.placeList = ko.observableArray(itemList);
-	}
+    this.selectedPlace = ko.observable();
+
+    this.selectPlace = function(place) {
+        self.selectedPlace(place);
+        self.toggleBounce(place);
+    };
+
+    this.toggleBounce = function(marker) {
+        if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+    };
 }
 
 
 var view = {
-	populateMarkers: function() {
-		myList.forEach(function(location) {
-			var marker = new google.maps.Marker(location);
-			marker.setMap(map);
-		})
-	},
 
     hideNav: function() {
         var sideBar = document.getElementById("side-bar");
@@ -77,5 +88,4 @@ var view = {
 };
 
 
-ko.applyBindings(new viewModel.buildList(myList));
-viewModel.init();
+ko.applyBindings(new viewModel());

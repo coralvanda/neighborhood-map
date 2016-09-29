@@ -17,9 +17,8 @@
 		    </div>
 		    <div id="list">
 		    	<ul data-bind="foreach: placeList">
-		    		<li>
-		    			<span data-bind="text: title"></span>
-		    		</li>
+		    		<li 
+		    		data-bind="text: title, click: $parent.selectplace"></li>
 		    	</ul>
 		    </div>
 	    </div>
