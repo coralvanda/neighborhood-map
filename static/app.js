@@ -16,43 +16,44 @@ var model = {
     locations: [
         {
         	position: {lat: -34.385, lng: 150.645},
-        	map: map,
         	title: "A"
         },
         {
         	position: {lat: -34.398, lng: 150.658},
-        	map: map,
         	title: "B"
         },
         {
         	position: {lat: -34.4, lng: 150.648},
-        	map: map,
         	title: "C"
         },
         {
         	position: {lat: -34.6, lng: 150.848},
-        	map: map,
         	title: "D"
         },
         {
         	position: {lat: -34.5, lng: 150.540},
-        	map: map,
         	title: "E"
         }
     ]
 }
 
 
-var viewModel = function() {
+var ViewModel = function() {
     var self = this;
 
     this.placeList = ko.observableArray([]);
 
     model.locations.forEach(function(place) {
-        self.placeList.push(place);
         var marker = new google.maps.Marker(place);
         marker.setMap(map);
-        marker.addListener('click', self.selectPlace);
+        marker.addListener('click', function() {
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        });
+        self.placeList.push( new Place(marker) );
     });
 
     this.selectedPlace = ko.observable();
@@ -61,31 +62,14 @@ var viewModel = function() {
         self.selectedPlace(place);
         self.toggleBounce(place);
     };
-
-    this.toggleBounce = function(marker) {
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
-    };
 }
 
 
-var view = {
-
-    hideNav: function() {
-        var sideBar = document.getElementById("side-bar");
-        var mapDisplay = document.getElementById("map");
-        if (sideBar.style.display !== 'none') {
-            sideBar.style.display = 'none';
-            mapDisplay.style.height = "100%";
-        } else {
-            sideBar.style.display = 'block';
-            mapDisplay.style.height = "80%";
-        }
-    }
+var Place = function(data) {
+    this.position = ko.observable(data.postiion);
+    this.title = ko.observable(data.title);
+    this.animation = ko.observable(data.getAnimation())
 };
 
 
-ko.applyBindings(new viewModel());
+ko.applyBindings(new ViewModel());
