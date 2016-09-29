@@ -18,7 +18,9 @@
 		    <div id="list">
 		    	<ul data-bind="foreach: placeList">
 		    		<li 
-		    		data-bind="text: title, click: $parent.selectplace"></li>
+		    		data-bind="text: title, click: $parent.selectplace,
+		    		css: {highlight: $parent.checkSelected}">
+		    		</li>
 		    	</ul>
 		    </div>
 	    </div>

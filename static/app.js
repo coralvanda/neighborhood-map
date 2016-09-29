@@ -47,6 +47,7 @@ var ViewModel = function() {
         var marker = new google.maps.Marker(place);
         marker.setMap(map);
         marker.addListener('click', function() {
+            self.selectPlace(this);
             if (marker.getAnimation() !== null) {
                 marker.setAnimation(null);
             } else {
@@ -60,8 +61,15 @@ var ViewModel = function() {
 
     this.selectPlace = function(place) {
         self.selectedPlace(place);
-        self.toggleBounce(place);
     };
+
+    this.checkSelected = ko.computed(function(place) {
+        if (place == self.selectedPlace()) {
+            return true;
+        } else {
+            return false;
+        }
+    }, this);
 }
 
 

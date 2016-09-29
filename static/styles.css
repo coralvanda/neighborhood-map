@@ -42,7 +42,7 @@ ul {
 	margin: 0 0 0 0;
 }
 
-li:active {
+.highlight {
 	background-color: white;
 }
 
