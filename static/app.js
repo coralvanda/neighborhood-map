@@ -7,28 +7,6 @@ var map = new google.maps.Map(document.getElementById('map'), {
 });
 
 
-//var input = document.getElementById('pac-input');
-//var autocomplete = new google.maps.places.Autocomplete(input);
-
-/*
-ko.bindingHandlers.map = {
-    init: function(element, valueAccessor, allBindingsAccessor, ViewModel) {
-        var value = valueAccessor();
-        var mapOjbect = ko.unwrap(value);
-        mapOjbect.googleMap = new google.maps.Map(element, {
-                center: {
-                    lat: mapOjbect.lat(), 
-                    lng: mapOjbect.lng()
-                },
-                zoom: mapOjbect.zoom
-            }
-        );
-    }
-}
-*/
-
-
-
 // Make a list of locations to add to the map
 var model = {
     locations: [
@@ -107,12 +85,6 @@ function ViewModel() {
     };
 }
 
-/*
-var Place = function(data) {
-    this.position = ko.observable(data.postiion);
-    this.title = ko.observable(data.title);
-};
-*/
 
 
 ko.applyBindings(new ViewModel());
