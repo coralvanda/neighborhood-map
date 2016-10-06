@@ -85,13 +85,8 @@ function ViewModel() {
 
     self.searchResults().forEach(function(marker) {
         marker.setMap(map);
-        marker.addListener('click', function() {
-            self.selectPlace(this);
-            if (marker.getAnimation() !== null) {
-                marker.setAnimation(null);
-            } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-            }
+        marker.addListener( 'click', function() {
+            return self.selectPlace(this);
         });
     });
 
@@ -99,8 +94,10 @@ function ViewModel() {
     self.selectPlace = function(place) {
         if (self.selectedPlaceIds().indexOf(place.id) > -1) {
             self.selectedPlaceIds.remove(place.id);
+            place.setAnimation(null);
         } else {
             self.selectedPlaceIds.push(place.id);
+            place.setAnimation(google.maps.Animation.BOUNCE);
         }
     };
 
