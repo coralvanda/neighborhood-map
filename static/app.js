@@ -60,9 +60,9 @@ var model = {
 function ViewModel() {
     var self = this;
 
-    this.placeList = ko.observableArray([]);
-    this.searchTerm = ko.observable("");
-    this.myMap = ko.observable({
+    self.placeList = ko.observableArray([]);
+    self.searchTerm = ko.observable("");
+    self.myMap = ko.observable({
         lat: ko.observable(-34.397), 
         lng: ko.observable(150.644)
     });
@@ -83,36 +83,36 @@ function ViewModel() {
         self.placeList.push(marker);
     });
 
-    this.searchResults = ko.computed(function() {
+    self.searchResults = ko.computed(function() {
         this.results = ko.observableArray([]);
         self.placeList().forEach(function(marker) {
             if (marker.title.indexOf(self.searchTerm) !== -1) {
-                this.results.push(marker)
+                this.results.push(marker);
                 //marker.setMap(myMap);
             } else {
                 //marker.setMap(null);
             }
         });
-        return this.results();
+        return this.results;
     });
 
-    this.selectedPlace = ko.observable();
+    self.selectedPlace = ko.observable();
 
-    this.selectPlace = function(place) {
+    self.selectPlace = function(place) {
         self.selectedPlace(place);
     };
 
-    this.checkSelected = ko.pureComputed(function(place) {
+    self.checkSelected = ko.pureComputed(function(place) {
         if (place === self.selectedPlace()) {
             return true;
         } else {
             return false;
         }
-    }, this);
+    }, self);
 
-    this.navBar = ko.observable(true);
+    self.navBar = ko.observable(true);
 
-    this.hideSearch = function() {
+    self.hideSearch = function() {
         self.navBar(!self.navBar());
     }
 }
