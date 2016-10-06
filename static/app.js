@@ -57,16 +57,19 @@ function ViewModel() {
     // Computed observable array for populating search results and markers
     self.searchResults = ko.computed(function() {
         return ko.utils.arrayFilter(self.placeList(), function(place) {
-            return place.title.search(self.searchTerm()) !== -1;
+            if (place.title.search(self.searchTerm()) !== -1) {
+                place.setMap(map);
+                place.addListener( 'click', function() {
+                    return self.selectPlace(this);
+                });
+                return true;
+            } else {
+                place.setMap(null);
+                return false;
+            }
         });
     });
 
-    self.searchResults().forEach(function(marker) {
-        marker.setMap(map);
-        marker.addListener( 'click', function() {
-            return self.selectPlace(this);
-        });
-    });
 
     self.selectedPlaceIds = ko.observableArray([]);
     self.selectPlace = function(place) {
