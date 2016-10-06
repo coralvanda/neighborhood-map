@@ -19,13 +19,14 @@
 		    <div id="list">
 		    	<ul data-bind="foreach: searchResults">
 		    		<li 
-		    		data-bind="text: title, click: $parent.selectplace,
-		    		css: {highlight: $parent.checkSelected}">
+		    		data-bind="text: title, click: $root.selectplace,
+		    		css: {highlight: title == $root.selectedPlace()}">
+		    		    <span data-bind="$root.selectedPlace"></span>
 		    		</li>
 		    	</ul>
 		    </div>
 	    </div>
-	    <div id="map" data-bind="map: myMap"></div>
+	    <div id="map"></div>
 	    <div id="burger-icon" data-bind="click: hideSearch">
     		<div class="burger"></div>
     		<div class="burger"></div>

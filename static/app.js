@@ -1,6 +1,5 @@
 // Google Map API key AIzaSyCz4KE50vlj_IUxdao2tVokcSaN8GJIdb4
 
-
 // Put the map on the page
 var map = new google.maps.Map(document.getElementById('map'), {
 	  center: {lat: -34.397, lng: 150.644},
@@ -84,16 +83,9 @@ function ViewModel() {
     });
 
     self.searchResults = ko.computed(function() {
-        this.results = ko.observableArray([]);
-        self.placeList().forEach(function(marker) {
-            if (marker.title.indexOf(self.searchTerm) !== -1) {
-                this.results.push(marker);
-                //marker.setMap(myMap);
-            } else {
-                //marker.setMap(null);
-            }
+        return ko.utils.arrayFilter(self.placeList(), function(place) {
+            return place.title.search(self.searchTerm()) !== -1;
         });
-        return this.results;
     });
 
     self.selectedPlace = ko.observable();
@@ -102,19 +94,11 @@ function ViewModel() {
         self.selectedPlace(place);
     };
 
-    self.checkSelected = ko.pureComputed(function(place) {
-        if (place === self.selectedPlace()) {
-            return true;
-        } else {
-            return false;
-        }
-    }, self);
-
     self.navBar = ko.observable(true);
 
     self.hideSearch = function() {
         self.navBar(!self.navBar());
-    }
+    };
 }
 
 /*
