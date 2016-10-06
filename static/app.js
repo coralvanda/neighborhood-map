@@ -1,5 +1,18 @@
 // Google Map API key AIzaSyCz4KE50vlj_IUxdao2tVokcSaN8GJIdb4
 
+ko.bindingHandlers.slideVisible = {
+    update: function(element, valueAccessor) {
+        var value = valueAccessor();
+        var valueUnwrapped = ko.unwrap(value);
+        var duration = 400;
+        if (valueUnwrapped == true)
+            $(element).slideDown(duration);
+        else
+            $(element).slideUp(duration);
+    }
+};
+
+
 // Put the map on the page
 var map = new google.maps.Map(document.getElementById('map'), {
 	  center: {lat: -34.397, lng: 150.644},
@@ -91,3 +104,12 @@ function ViewModel() {
 
 
 ko.applyBindings(new ViewModel());
+
+/* TODO:
+ * 
+ *  1 - fix issue with selection remaining highlighted while list is 
+ *      hidden and selected marker is de-selected
+ *  2 - fix issue with map staying at 70% even when list is hidden
+ *  3 - fix issue with BOUNCE ending if text in the search bar changes
+ *  4 - add 3rd party API
+ */
