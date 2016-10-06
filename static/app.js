@@ -55,7 +55,7 @@ var model = {
 }
 
 
-var ViewModel = function() {
+function ViewModel() {
     var self = this;
 
     this.placeList = ko.observableArray([]);
@@ -107,6 +107,12 @@ var ViewModel = function() {
             return false;
         }
     }, this);
+
+    this.navBar = ko.observable(true);
+
+    this.hideSearch = function() {
+        self.navBar(!self.navBar());
+    }
 }
 
 

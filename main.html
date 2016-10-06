@@ -10,7 +10,7 @@
 
 <body>
     <div id="container">
-	    <div id="side-bar" data-bind="visible: hidden">
+	    <div id="side-bar" data-bind="visible: navBar">
 		    <div id="search">
 		    	<input id="search-input" type="text" 
 		    	data-bind="value: searchTerm, valueUpdate: 'keyup'"
@@ -26,18 +26,19 @@
 		    </div>
 	    </div>
 	    <div id="map" data-bind="map: myMap"></div>
-	    <div id="burger-icon">
+	    <div id="burger-icon" data-bind="click: hideSearch">
     		<div class="burger"></div>
     		<div class="burger"></div>
     		<div class="burger"></div>
 		</div>
 	</div>
 
+	<script src="static/lib/jquery-3.1.1.js"></script>
+	<!-- Remember to switch jquery to min version for production -->
     <script src="static/lib/knockout-3.4.0.js"></script>
     <script src="static/lib/knockout.mapping-latest.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCz4KE50vlj_IUxdao2tVokcSaN8GJIdb4&libraries=places&">
     </script>
     <script src="static/app.js"></script>
-    <script src="static/helper.js"></script>
 </body>
 </html>
