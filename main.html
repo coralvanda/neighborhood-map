@@ -21,7 +21,7 @@
 		    		<li 
 		    			data-bind="text: title,
 		    			css: {
-		    			    selected: id === $root.selectedPlace().id
+		    			    selected: $root.selectedPlaceIds().indexOf(id) > -1
 		    			},
 		    			click: $root.selectPlace">
 		    		</li>

@@ -71,19 +71,8 @@ function ViewModel() {
         lng: ko.observable(150.644)
     });
 
-    // Turn the locations into markers and put them on the map
-    // and populate the ko.observableArray with the markers
     model.locations.forEach(function(place) {
         var marker = new google.maps.Marker(place);
-        marker.setMap(map);
-        marker.addListener('click', function() {
-            self.selectPlace(this);
-            if (marker.getAnimation() !== null) {
-                marker.setAnimation(null);
-            } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-            }
-        });
         self.placeList.push(marker);
     });
 
@@ -94,9 +83,25 @@ function ViewModel() {
         });
     });
 
-    self.selectedPlace = ko.observable("");
+    self.searchResults().forEach(function(marker) {
+        marker.setMap(map);
+        marker.addListener('click', function() {
+            self.selectPlace(this);
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        });
+    });
+
+    self.selectedPlaceIds = ko.observableArray([]);
     self.selectPlace = function(place) {
-        self.selectedPlace(place) 
+        if (self.selectedPlaceIds().indexOf(place.id) > -1) {
+            self.selectedPlaceIds.remove(place.id);
+        } else {
+            self.selectedPlaceIds.push(place.id);
+        }
     };
 
     self.navBar = ko.observable(true);
