@@ -34,23 +34,28 @@ var model = {
     locations: [
         {
         	position: {lat: -34.385, lng: 150.645},
-        	title: "Ancient"
+        	title: "Ancient",
+            id: 1
         },
         {
         	position: {lat: -34.398, lng: 150.658},
-        	title: "Bovine"
+        	title: "Bovine",
+            id: 2
         },
         {
         	position: {lat: -34.4, lng: 150.648},
-        	title: "Creative"
+        	title: "Creative",
+            id: 3
         },
         {
         	position: {lat: -34.6, lng: 150.848},
-        	title: "Darned"
+        	title: "Darned",
+            id: 4
         },
         {
         	position: {lat: -34.5, lng: 150.540},
-        	title: "Emus"
+        	title: "Emus",
+            id: 5
         }
     ]
 }
@@ -82,20 +87,19 @@ function ViewModel() {
         self.placeList.push(marker);
     });
 
+    // Computed observable array for populating search results and markers
     self.searchResults = ko.computed(function() {
         return ko.utils.arrayFilter(self.placeList(), function(place) {
             return place.title.search(self.searchTerm()) !== -1;
         });
     });
 
-    self.selectedPlace = ko.observable();
-
+    self.selectedPlace = ko.observable("");
     self.selectPlace = function(place) {
-        self.selectedPlace(place);
+        self.selectedPlace(place) 
     };
 
     self.navBar = ko.observable(true);
-
     self.hideSearch = function() {
         self.navBar(!self.navBar());
     };

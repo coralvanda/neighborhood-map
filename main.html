@@ -19,9 +19,11 @@
 		    <div id="list">
 		    	<ul data-bind="foreach: searchResults">
 		    		<li 
-		    		data-bind="text: title, click: $root.selectplace,
-		    		css: {highlight: title == $root.selectedPlace()}">
-		    		    <span data-bind="$root.selectedPlace"></span>
+		    			data-bind="text: title,
+		    			css: {
+		    			    selected: id === $root.selectedPlace().id
+		    			},
+		    			click: $root.selectPlace">
 		    		</li>
 		    	</ul>
 		    </div>
