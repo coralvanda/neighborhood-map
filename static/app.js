@@ -1,16 +1,17 @@
 // Google Map API key AIzaSyCz4KE50vlj_IUxdao2tVokcSaN8GJIdb4
 
-/*
+
 // Put the map on the page
 var map = new google.maps.Map(document.getElementById('map'), {
 	  center: {lat: -34.397, lng: 150.644},
 	  zoom: 10
 });
-*/
+
 
 //var input = document.getElementById('pac-input');
 //var autocomplete = new google.maps.places.Autocomplete(input);
 
+/*
 ko.bindingHandlers.map = {
     init: function(element, valueAccessor, allBindingsAccessor, ViewModel) {
         var value = valueAccessor();
@@ -25,6 +26,7 @@ ko.bindingHandlers.map = {
         );
     }
 }
+*/
 
 
 
@@ -69,7 +71,7 @@ function ViewModel() {
     // and populate the ko.observableArray with the markers
     model.locations.forEach(function(place) {
         var marker = new google.maps.Marker(place);
-        marker.setMap(self.myMap().googleMap);
+        marker.setMap(map);
         marker.addListener('click', function() {
             self.selectPlace(this);
             if (marker.getAnimation() !== null) {
@@ -78,13 +80,13 @@ function ViewModel() {
                 marker.setAnimation(google.maps.Animation.BOUNCE);
             }
         });
-        self.placeList.push( new Place(marker) );
+        self.placeList.push(marker);
     });
 
     this.searchResults = ko.computed(function() {
         this.results = ko.observableArray([]);
         self.placeList().forEach(function(marker) {
-            if (marker.title().indexOf(self.searchTerm) !== -1) {
+            if (marker.title.indexOf(self.searchTerm) !== -1) {
                 this.results.push(marker)
                 //marker.setMap(myMap);
             } else {
@@ -115,11 +117,12 @@ function ViewModel() {
     }
 }
 
-
+/*
 var Place = function(data) {
     this.position = ko.observable(data.postiion);
     this.title = ko.observable(data.title);
 };
+*/
 
 
 ko.applyBindings(new ViewModel());
