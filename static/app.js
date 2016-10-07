@@ -19,8 +19,8 @@ ko.bindingHandlers.slideVisible = {
 
 // Put the map on the page
 var map = new google.maps.Map(document.getElementById('map'), {
-	  center: {lat: -34.397, lng: 150.644},
-	  zoom: 10
+	  center: {lat: 47.597516, lng: -122.326390},
+	  zoom: 17
 });
 
 
@@ -28,28 +28,28 @@ var map = new google.maps.Map(document.getElementById('map'), {
 var model = {
     locations: [
         {
-        	position: {lat: -34.385, lng: 150.645},
-        	title: "Ancient",
+        	position: {lat: 47.596756, lng: -122.327037},
+        	title: "Uwajimaya Asian Supermarket",
             id: 1
         },
         {
-        	position: {lat: -34.398, lng: 150.658},
-        	title: "Bovine",
+        	position: {lat: 47.597431, lng: -122.326550},
+        	title: "Kinokuniya Bookstore",
             id: 2
         },
         {
-        	position: {lat: -34.4, lng: 150.648},
-        	title: "Creative",
+        	position: {lat: 47.597078, lng: -122.327540},
+        	title: "Samurai Noodle Restaurant",
             id: 3
         },
         {
-        	position: {lat: -34.6, lng: 150.848},
-        	title: "Darned",
+        	position: {lat: 47.598529, lng: -122.326421},
+        	title: "International Model Toys",
             id: 4
         },
         {
-        	position: {lat: -34.5, lng: 150.540},
-        	title: "Emus",
+        	position: {lat: 47.596464, lng: -122.326079},
+        	title: "Daiso Japan Variety Store",
             id: 5
         }
     ]
