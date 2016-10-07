@@ -6,9 +6,9 @@ ko.bindingHandlers.slideVisible = {
         var valueUnwrapped = ko.unwrap(value);
         var duration = 100;
         if (valueUnwrapped == true) {
-            $(element).slideDown(duration);
-            if ($(element).height() == "30%")
+            $(element).slideDown(duration, function() {
                 $("#map").height("70%");
+            });            
         } else {
             $(element).slideUp(duration);
             $("#map").height("100%");
