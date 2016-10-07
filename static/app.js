@@ -1,5 +1,4 @@
-// Google Map API key AIzaSyCz4KE50vlj_IUxdao2tVokcSaN8GJIdb4
-
+// Custom KO binding to slide the search/list panel in and out of view
 ko.bindingHandlers.slideVisible = {
     update: function(element, valueAccessor) {
         var value = valueAccessor();
@@ -17,7 +16,7 @@ ko.bindingHandlers.slideVisible = {
 };
 
 
-// Put the map on the page
+// Create the map and place on the page
 var map = new google.maps.Map(document.getElementById('map'), {
 	  center: {lat: 47.597516, lng: -122.326390},
 	  zoom: 17
@@ -30,27 +29,32 @@ var model = {
         {
         	position: {lat: 47.596756, lng: -122.327037},
         	title: "Uwajimaya Asian Supermarket",
-            id: 1
+            id: 1,
+            loc: {lat: 47.596756, lng: -122.327037}
         },
         {
         	position: {lat: 47.597431, lng: -122.326550},
         	title: "Kinokuniya Bookstore",
-            id: 2
+            id: 2,
+            loc: {lat: 47.597431, lng: -122.326550}
         },
         {
         	position: {lat: 47.597078, lng: -122.327540},
         	title: "Samurai Noodle Restaurant",
-            id: 3
+            id: 3,
+            loc: {lat: 47.597078, lng: -122.327540}
         },
         {
         	position: {lat: 47.598529, lng: -122.326421},
         	title: "International Model Toys",
-            id: 4
+            id: 4,
+            loc: {lat: 47.598529, lng: -122.326421}
         },
         {
         	position: {lat: 47.596464, lng: -122.326079},
         	title: "Daiso Japan Variety Store",
-            id: 5
+            id: 5,
+            loc: {lat: 47.596464, lng: -122.326079}
         }
     ]
 }
@@ -61,10 +65,7 @@ function ViewModel() {
 
     self.placeList = ko.observableArray([]);
     self.searchTerm = ko.observable("");
-    self.myMap = ko.observable({
-        lat: ko.observable(-34.397), 
-        lng: ko.observable(150.644)
-    });
+    self.infoWindowText = ko.observable("");
 
     model.locations.forEach(function(place) {
         var marker = new google.maps.Marker(place);
@@ -91,7 +92,11 @@ function ViewModel() {
         });
     });
 
+    self.requestTimeout = setTimeout(function() {
+        self.infoWindowText("Request timed out");
+    }, 5000);
 
+    // KO array to determine what places a user currently has selected
     self.selectedPlaceIds = ko.observableArray([]);
     self.selectPlace = function(place) {
         if (self.selectedPlaceIds().indexOf(place.id) > -1) {
@@ -101,11 +106,36 @@ function ViewModel() {
         } else {
             self.selectedPlaceIds.push(place.id);
             place.setAnimation(google.maps.Animation.BOUNCE);
-            self.infoWindow.setContent(place.title);
+            // Make an ajax request if the place is selected and
+            // add that info to an observable which will be placed
+            // in the info window for the marker
+            var latitude = place.loc.lat.toString();
+            var longitude = place.loc.lng.toString();
+            var dataLat = "lat=".concat(latitude);
+            var dataLng = "lng=".concat(longitude);
+            var dataUser = "username=coralvanda";
+            $.ajax({
+                url: "http://api.geonames.org/findNearestAddressJSON?",
+                data: dataLat + "&" + dataLng + "&" + dataUser,
+                dataType: "json",
+                success: function(data, status, jqXHR) {
+                    var dataString = place.title;
+                    dataString += data.address.streetNumber;
+                    dataString += "\n" + data.address.street;
+                    dataString += "\n" + data.address.placename;
+                    dataString += "\n" + data.address.adminCode1;
+                    dataString += "\n" + data.address.postalcode;
+                    self.infoWindowText(dataString);
+                    clearTimeout(self.requestTimeout);
+                }
+            })
+            self.infoWindow.setContent(self.infoWindowText());
             self.infoWindow.open(map, place);
         }
     };
 
+    // The variable referenced by the custom binding to know when to
+    // hide the search/list panel (controlled by the hamburger icon)
     self.navBar = ko.observable(true);
     self.hideSearch = function() {
         self.navBar(!self.navBar());
@@ -113,13 +143,12 @@ function ViewModel() {
 }
 
 
-
 ko.applyBindings(new ViewModel());
 
 /* TODO:
  * 
  *  1 - done
- *  2 - done
+ *  2 - add ability to keep multiple info windows open at once
  *  3 - fix issue with BOUNCE ending if text in the search bar changes
  *  4 - add 3rd party API
  */
