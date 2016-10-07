@@ -26,6 +26,9 @@
 		    			},
 		    			click: $root.selectPlace">
 		    			</span>
+		    			<span data-bind="visible: $root.selectedPlaceIds().indexOf(id) > -1">
+		    			    <p data-bind="text: $root.placeAddress"></p>
+		    			</span>
 		    		</li>
 		    	</ul>
 		    </div>

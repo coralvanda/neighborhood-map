@@ -65,7 +65,8 @@ function ViewModel() {
 
     self.placeList = ko.observableArray([]);
     self.searchTerm = ko.observable("");
-    self.infoWindowText = ko.observable("");
+    self.placeAddress = ko.observable("");
+    self.infoWindowText = "";
 
     model.locations.forEach(function(place) {
         var marker = new google.maps.Marker(place);
@@ -93,7 +94,7 @@ function ViewModel() {
     });
 
     self.requestTimeout = setTimeout(function() {
-        self.infoWindowText("Request timed out");
+        self.infoWindowText = "Request timed out";
     }, 5000);
 
     // KO array to determine what places a user currently has selected
@@ -106,9 +107,11 @@ function ViewModel() {
         } else {
             self.selectedPlaceIds.push(place.id);
             place.setAnimation(google.maps.Animation.BOUNCE);
-            // Make an ajax request if the place is selected and
-            // add that info to an observable which will be placed
-            // in the info window for the marker
+            self.infoWindowText = place.title;
+            self.infoWindow.setContent(self.infoWindowText);
+            self.infoWindow.open(map, place);
+            // Make an ajax request when place is selected and
+            // display the returned info
             var latitude = place.loc.lat.toString();
             var longitude = place.loc.lng.toString();
             var dataLat = "lat=".concat(latitude);
@@ -119,18 +122,15 @@ function ViewModel() {
                 data: dataLat + "&" + dataLng + "&" + dataUser,
                 dataType: "json",
                 success: function(data, status, jqXHR) {
-                    var dataString = place.title;
-                    dataString += "<br>" + data.address.streetNumber;
-                    dataString += " " + data.address.street;
-                    dataString += "<br>" + data.address.placename;
-                    dataString += "<br>" + data.address.adminCode1;
-                    dataString += "<br>" + data.address.postalcode;
-                    self.infoWindowText(dataString);
+                    var formatedAddress = data.address.streetNumber;
+                    formatedAddress += " " + data.address.street;
+                    formatedAddress += " " + data.address.placename;
+                    formatedAddress += ", " + data.address.adminCode1;
+                    formatedAddress += " " + data.address.postalcode;
+                    self.placeAddress(formatedAddress);
                     clearTimeout(self.requestTimeout);
                 }
             })
-            self.infoWindow.setContent(self.infoWindowText());
-            self.infoWindow.open(map, place);
         }
     };
 
@@ -147,9 +147,7 @@ ko.applyBindings(new ViewModel());
 
 /* TODO:
  * 
- *  1 - fix issue with info window data lagging one behind the
-        selected item
+ *  1 - fix issue with ajax data displaying the same for every <li>
  *  2 - add ability to keep multiple info windows open at once
  *  3 - fix issue with BOUNCE ending if text in the search bar changes
- *  4 - add 3rd party API
  */
