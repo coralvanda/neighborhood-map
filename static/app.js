@@ -66,7 +66,7 @@ function ViewModel() {
     self.placeList = ko.observableArray([]);
     self.searchTerm = ko.observable("");
     self.placeAddress = ko.observable("");
-    self.infoWindowText = "";
+    self.showAddress = ko.observable("");
 
     model.locations.forEach(function(place) {
         var marker = new google.maps.Marker(place);
@@ -94,21 +94,26 @@ function ViewModel() {
     });
 
     self.requestTimeout = setTimeout(function() {
-        self.infoWindowText = "Request timed out";
+        self.placeAddress("Request timed out");
     }, 5000);
 
     // KO array to determine what places a user currently has selected
     self.selectedPlaceIds = ko.observableArray([]);
     self.selectPlace = function(place) {
+        // Handles removing a selection
         if (self.selectedPlaceIds().indexOf(place.id) > -1) {
             self.selectedPlaceIds.remove(place.id);
             place.setAnimation(null);
             self.infoWindow.close();
+            if (self.showAddress === place.id){
+                self.showAddress("");
+            }
+        // Handles adding a selection
         } else {
+            self.showAddress(place.id);
             self.selectedPlaceIds.push(place.id);
             place.setAnimation(google.maps.Animation.BOUNCE);
-            self.infoWindowText = place.title;
-            self.infoWindow.setContent(self.infoWindowText);
+            self.infoWindow.setContent(place.title);
             self.infoWindow.open(map, place);
             // Make an ajax request when place is selected and
             // display the returned info
@@ -147,7 +152,8 @@ ko.applyBindings(new ViewModel());
 
 /* TODO:
  * 
- *  1 - fix issue with ajax data displaying the same for every <li>
+ *  1 - fix issue with address info not becoming invisible after
+        item is deselected
  *  2 - add ability to keep multiple info windows open at once
  *  3 - fix issue with BOUNCE ending if text in the search bar changes
  */
