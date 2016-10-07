@@ -120,11 +120,11 @@ function ViewModel() {
                 dataType: "json",
                 success: function(data, status, jqXHR) {
                     var dataString = place.title;
-                    dataString += data.address.streetNumber;
-                    dataString += "\n" + data.address.street;
-                    dataString += "\n" + data.address.placename;
-                    dataString += "\n" + data.address.adminCode1;
-                    dataString += "\n" + data.address.postalcode;
+                    dataString += "<br>" + data.address.streetNumber;
+                    dataString += " " + data.address.street;
+                    dataString += "<br>" + data.address.placename;
+                    dataString += "<br>" + data.address.adminCode1;
+                    dataString += "<br>" + data.address.postalcode;
                     self.infoWindowText(dataString);
                     clearTimeout(self.requestTimeout);
                 }
@@ -147,7 +147,8 @@ ko.applyBindings(new ViewModel());
 
 /* TODO:
  * 
- *  1 - done
+ *  1 - fix issue with info window data lagging one behind the
+        selected item
  *  2 - add ability to keep multiple info windows open at once
  *  3 - fix issue with BOUNCE ending if text in the search bar changes
  *  4 - add 3rd party API
