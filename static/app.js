@@ -71,6 +71,10 @@ function ViewModel() {
         self.placeList.push(marker);
     });
 
+    self.infoWindow = new google.maps.InfoWindow({
+        content: ""
+    });
+
     // Computed observable array for populating search results and markers
     self.searchResults = ko.computed(function() {
         return ko.utils.arrayFilter(self.placeList(), function(place) {
@@ -93,9 +97,12 @@ function ViewModel() {
         if (self.selectedPlaceIds().indexOf(place.id) > -1) {
             self.selectedPlaceIds.remove(place.id);
             place.setAnimation(null);
+            self.infoWindow.close();
         } else {
             self.selectedPlaceIds.push(place.id);
             place.setAnimation(google.maps.Animation.BOUNCE);
+            self.infoWindow.setContent(place.title);
+            self.infoWindow.open(map, place);
         }
     };
 
