@@ -18,12 +18,14 @@
 		    </div>
 		    <div id="list">
 		    	<ul data-bind="foreach: searchResults">
-		    		<li 
+		    		<li>
+		    		    <span
 		    			data-bind="text: title,
 		    			css: {
 		    			    selected: $root.selectedPlaceIds().indexOf(id) > -1
 		    			},
 		    			click: $root.selectPlace">
+		    			</span>
 		    		</li>
 		    	</ul>
 		    </div>
