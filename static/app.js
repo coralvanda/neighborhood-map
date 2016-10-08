@@ -5,12 +5,10 @@ ko.bindingHandlers.slideVisible = {
         var valueUnwrapped = ko.unwrap(value);
         var duration = 100;
         if (valueUnwrapped == true) {
-            $(element).slideDown(duration, function() {
-                $("#map").height("70%");
-            });            
+            $(element).slideDown(duration);            
         } else {
             $(element).slideUp(duration);
-            $("#map").height("100%");
+            
         }
     }
 };
@@ -144,6 +142,11 @@ function ViewModel() {
     self.navBar = ko.observable(true);
     self.hideSearch = function() {
         self.navBar(!self.navBar());
+        if (self.navBar() === true) {
+            $("#map").height("70%");
+        } else {
+            $("#map").height("100%");
+        }
     };
 }
 
@@ -152,7 +155,7 @@ ko.applyBindings(new ViewModel());
 
 /* TODO:
  * 
- *  1 - fix map resizing because of slideVisible when map is 100%
+ *  1 - done
  *  2 - add ability to keep multiple info windows open at once
  *  3 - fix issue with BOUNCE ending if text in the search bar changes
  */
