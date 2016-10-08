@@ -5,10 +5,9 @@ ko.bindingHandlers.slideVisible = {
         var valueUnwrapped = ko.unwrap(value);
         var duration = 100;
         if (valueUnwrapped == true) {
-            $(element).slideDown(duration);            
+            $(element).slideDown(duration);
         } else {
             $(element).slideUp(duration);
-            
         }
     }
 };
@@ -21,7 +20,7 @@ var map = new google.maps.Map(document.getElementById('map'), {
 });
 
 
-// Make a list of locations to add to the map
+// A list of locations to add to the map
 var model = {
     locations: [
         {
@@ -154,8 +153,7 @@ function ViewModel() {
 ko.applyBindings(new ViewModel());
 
 /* TODO:
- * 
- *  1 - done
- *  2 - add ability to keep multiple info windows open at once
- *  3 - fix issue with BOUNCE ending if text in the search bar changes
+ *
+ *  1 - add ability to keep multiple info windows open at once
+ *  2 - fix issue with BOUNCE ending if text in the search bar changes
  */
