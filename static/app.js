@@ -65,6 +65,7 @@ function ViewModel() {
     self.placeAddress = ko.observable("");
     self.showAddress = ko.observable("");
 
+    // Import model data, transform into markers
     model.locations.forEach(function(place) {
         var marker = new google.maps.Marker(place);
         self.placeList.push(marker);
@@ -86,6 +87,7 @@ function ViewModel() {
         });
     });
 
+    // Prepares timeout for AJAX request
     self.requestTimeout = setTimeout(function() {
         self.placeAddress("Request timed out");
     }, 5000);
@@ -149,8 +151,3 @@ function ViewModel() {
 
 
 ko.applyBindings(new ViewModel());
-
-/* TODO:
- *
- *  1 - fix issue with BOUNCE ending if text in the search bar changes
- */
