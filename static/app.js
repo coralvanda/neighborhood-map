@@ -70,10 +70,6 @@ function ViewModel() {
         self.placeList.push(marker);
     });
 
-    self.infoWindow = new google.maps.InfoWindow({
-        content: ""
-    });
-
     // Computed observable array for populating search results and markers
     self.searchResults = ko.computed(function() {
         return ko.utils.arrayFilter(self.placeList(), function(place) {
@@ -101,17 +97,19 @@ function ViewModel() {
         if (self.selectedPlaceIds().indexOf(place.id) > -1) {
             self.selectedPlaceIds.remove(place.id);
             place.setAnimation(null);
-            self.infoWindow.close();
+            this.infoWindow.close();
             if (self.showAddress() === place.id){
                 self.showAddress("");
             }
         // Handles adding a selection
         } else {
+            this.infoWindow = new google.maps.InfoWindow({
+                content: place.title
+            });
             self.showAddress(place.id);
             self.selectedPlaceIds.push(place.id);
             place.setAnimation(google.maps.Animation.BOUNCE);
-            self.infoWindow.setContent(place.title);
-            self.infoWindow.open(map, place);
+            this.infoWindow.open(map, place);
             // Make an ajax request when place is selected and
             // display the returned info
             var latitude = place.loc.lat.toString();
@@ -154,6 +152,5 @@ ko.applyBindings(new ViewModel());
 
 /* TODO:
  *
- *  1 - add ability to keep multiple info windows open at once
- *  2 - fix issue with BOUNCE ending if text in the search bar changes
+ *  1 - fix issue with BOUNCE ending if text in the search bar changes
  */
