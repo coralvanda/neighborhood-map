@@ -105,7 +105,7 @@ function ViewModel() {
             self.selectedPlaceIds.remove(place.id);
             place.setAnimation(null);
             self.infoWindow.close();
-            if (self.showAddress === place.id){
+            if (self.showAddress() === place.id){
                 self.showAddress("");
             }
         // Handles adding a selection
@@ -152,8 +152,7 @@ ko.applyBindings(new ViewModel());
 
 /* TODO:
  * 
- *  1 - fix issue with address info not becoming invisible after
-        item is deselected
+ *  1 - done
  *  2 - add ability to keep multiple info windows open at once
  *  3 - fix issue with BOUNCE ending if text in the search bar changes
  */
