@@ -152,7 +152,7 @@ ko.applyBindings(new ViewModel());
 
 /* TODO:
  * 
- *  1 - done
+ *  1 - fix map resizing because of slideVisible when map is 100%
  *  2 - add ability to keep multiple info windows open at once
  *  3 - fix issue with BOUNCE ending if text in the search bar changes
  */
