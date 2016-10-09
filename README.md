@@ -13,9 +13,8 @@ Nanodegree program.  It makes use of the following:
 
 Install all files and subdirectories in one directory.  Use a valid
 Google Map API key, and insert that value at the indicated location in
-the `static/public.js` file.  In `main.html`, change the final `<script>`
-tag source to point to the `public.js` file.  Then use a web browser to
-open the `main.html` file.  Users may select items by clicking
+the `static/public.js` file.  Then use a web browser to open the
+`main.html` file.  Users may select items by clicking
 on the names in the list, or by clicking on the markers on the map.  The
 most recently selected location will display address information below its
 name in the list.  Users may also type into the search bar to filter items

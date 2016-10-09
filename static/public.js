@@ -1,9 +1,8 @@
-var privateLink = "http://maps.googleapis.com/maps/api/js?key=" +
-        "GOOGLE_API_KEY_HERE&" +
-        "libraries=places&callback=initMap";
+var url = "http://maps.googleapis.com/maps/api/js?key=" +
+    "PLACE_GOOGLE_MAP_API_KEY_HERE&" +
+    "libraries=places&callback=initMap";
 
-var privateScript = document.createElement('script');
-privateScript.src = privateLink;
-privateScript.asnc;
-privateScript.defer;
-$('body').append(privateScript);
+$.getScript(url)
+    .fail(function() {
+    	alert("Google Maps failed to load");
+});
