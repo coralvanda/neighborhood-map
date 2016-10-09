@@ -61,20 +61,22 @@ function ViewModel() {
     // Import model data, transform into markers
     model.locations.forEach(function(place) {
         var marker = new google.maps.Marker(place);
+        marker.setMap(map);
+        marker.infoWindow = new google.maps.InfoWindow();
         self.placeList.push(marker);
     });
 
     // Computed observable array for populating search results and markers
     self.searchResults = ko.computed(function() {
         return ko.utils.arrayFilter(self.placeList(), function(place) {
-            if (place.title.search(self.searchTerm()) !== -1) {
-                place.setMap(map);
+            if (place.title.toLowerCase().search(self.searchTerm().toLowerCase()) !== -1) {
+                place.setVisible(true);
                 place.addListener( 'click', function() {
                     return self.selectPlace(this);
                 });
                 return true;
             } else {
-                place.setMap(null);
+                place.setVisible(false);
                 return false;
             }
         });
@@ -92,19 +94,17 @@ function ViewModel() {
         if (self.selectedPlaceIds().indexOf(place.id) > -1) {
             self.selectedPlaceIds.remove(place.id);
             place.setAnimation(null);
-            this.infoWindow.close();
+            place.infoWindow.close();
             if (self.showAddress() === place.id){
                 self.showAddress("");
             }
         // Handles adding a selection
         } else {
-            this.infoWindow = new google.maps.InfoWindow({
-                content: place.title
-            });
+            place.infoWindow.setContent(place.title);
             self.showAddress(place.id);
             self.selectedPlaceIds.push(place.id);
             place.setAnimation(google.maps.Animation.BOUNCE);
-            this.infoWindow.open(map, place);
+            place.infoWindow.open(map, place);
             // Make an ajax request when place is selected and
             // display the returned info
             var latitude = place.loc.lat.toString();
