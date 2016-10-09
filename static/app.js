@@ -13,13 +13,6 @@ ko.bindingHandlers.slideVisible = {
 };
 
 
-// Create the map and place on the page
-var map = new google.maps.Map(document.getElementById('map'), {
-	  center: {lat: 47.597516, lng: -122.326390},
-	  zoom: 17
-});
-
-
 // A list of locations to add to the map
 var model = {
     locations: [
@@ -54,7 +47,7 @@ var model = {
             loc: {lat: 47.596464, lng: -122.326079}
         }
     ]
-}
+};
 
 
 function ViewModel() {
@@ -150,4 +143,12 @@ function ViewModel() {
 }
 
 
-ko.applyBindings(new ViewModel());
+// Create the map and place on the page
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 47.597516, lng: -122.326390},
+      zoom: 17
+    });
+    ko.applyBindings(new ViewModel());
+}
