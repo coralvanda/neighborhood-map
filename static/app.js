@@ -4,7 +4,7 @@ ko.bindingHandlers.slideVisible = {
         var value = valueAccessor();
         var valueUnwrapped = ko.unwrap(value);
         var duration = 100;
-        if (valueUnwrapped == true) {
+        if (valueUnwrapped === true) {
             $(element).slideDown(duration);
         } else {
             $(element).slideUp(duration);
@@ -125,7 +125,7 @@ function ViewModel() {
                     self.placeAddress(formatedAddress);
                     clearTimeout(self.requestTimeout);
                 }
-            })
+            });
         }
     };
 
