@@ -111,6 +111,7 @@ function ViewModel() {
             self.selectedPlaceIds.push(place.id);
             place.setAnimation(google.maps.Animation.BOUNCE);
             place.infoWindow.open(map, place);
+            map.panTo(place.getPosition());
             // Make an ajax request when place is selected and
             // display the returned info
             var latitude = place.loc.lat.toString();
