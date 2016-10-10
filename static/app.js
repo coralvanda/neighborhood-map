@@ -122,6 +122,7 @@ function ViewModel() {
                 url: 'http://api.geonames.org/findNearestAddressJSON?',
                 data: dataLat + '&' + dataLng + '&' + dataUser,
                 dataType: 'json',
+                cache: true,
                 success: function(data, status, jqXHR) {
                     var formatedAddress = data.address.streetNumber;
                     formatedAddress += ' ' + data.address.street;
@@ -130,8 +131,16 @@ function ViewModel() {
                     formatedAddress += ' ' + data.address.postalcode;
                     self.placeAddress(formatedAddress);
                     clearTimeout(self.requestTimeout);
+                },
+                error: function(jqXHR, status, err) {
+                    alert('Failed to load GeoNames data ' + status + err);
                 }
             });
+        }
+        if (self.showAddress()) {
+            $('#side-bar').height('35%');
+        } else {
+            $('#side-bar').height('30%');
         }
     };
 
