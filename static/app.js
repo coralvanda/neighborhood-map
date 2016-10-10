@@ -1,3 +1,5 @@
+'use strict';
+
 // Custom KO binding to slide the search/list panel in and out of view
 ko.bindingHandlers.slideVisible = {
     update: function(element, valueAccessor) {
@@ -18,31 +20,31 @@ var model = {
     locations: [
         {
         	position: {lat: 47.596756, lng: -122.327037},
-        	title: "Uwajimaya Asian Supermarket",
+        	title: 'Uwajimaya Asian Supermarket',
             id: 1,
             loc: {lat: 47.596756, lng: -122.327037}
         },
         {
         	position: {lat: 47.597431, lng: -122.326550},
-        	title: "Kinokuniya Bookstore",
+        	title: 'Kinokuniya Bookstore',
             id: 2,
             loc: {lat: 47.597431, lng: -122.326550}
         },
         {
         	position: {lat: 47.597078, lng: -122.327540},
-        	title: "Samurai Noodle Restaurant",
+        	title: 'Samurai Noodle Restaurant',
             id: 3,
             loc: {lat: 47.597078, lng: -122.327540}
         },
         {
         	position: {lat: 47.598529, lng: -122.326421},
-        	title: "International Model Toys",
+        	title: 'International Model Toys',
             id: 4,
             loc: {lat: 47.598529, lng: -122.326421}
         },
         {
         	position: {lat: 47.596464, lng: -122.326079},
-        	title: "Daiso Japan Variety Store",
+        	title: 'Daiso Japan Variety Store',
             id: 5,
             loc: {lat: 47.596464, lng: -122.326079}
         }
@@ -84,7 +86,7 @@ function ViewModel() {
 
     // Prepares timeout for AJAX request
     self.requestTimeout = setTimeout(function() {
-        self.placeAddress("Request timed out");
+        self.placeAddress('Request timed out');
     }, 5000);
 
     // KO array to determine what places a user currently has selected
@@ -109,19 +111,19 @@ function ViewModel() {
             // display the returned info
             var latitude = place.loc.lat.toString();
             var longitude = place.loc.lng.toString();
-            var dataLat = "lat=".concat(latitude);
-            var dataLng = "lng=".concat(longitude);
-            var dataUser = "username=coralvanda";
+            var dataLat = 'lat='.concat(latitude);
+            var dataLng = 'lng='.concat(longitude);
+            var dataUser = 'username=coralvanda';
             $.ajax({
-                url: "http://api.geonames.org/findNearestAddressJSON?",
-                data: dataLat + "&" + dataLng + "&" + dataUser,
-                dataType: "json",
+                url: 'http://api.geonames.org/findNearestAddressJSON?',
+                data: dataLat + '&' + dataLng + '&' + dataUser,
+                dataType: 'json',
                 success: function(data, status, jqXHR) {
                     var formatedAddress = data.address.streetNumber;
-                    formatedAddress += " " + data.address.street;
-                    formatedAddress += " " + data.address.placename;
-                    formatedAddress += ", " + data.address.adminCode1;
-                    formatedAddress += " " + data.address.postalcode;
+                    formatedAddress += ' ' + data.address.street;
+                    formatedAddress += ' ' + data.address.placename;
+                    formatedAddress += ', ' + data.address.adminCode1;
+                    formatedAddress += ' ' + data.address.postalcode;
                     self.placeAddress(formatedAddress);
                     clearTimeout(self.requestTimeout);
                 }
@@ -135,9 +137,9 @@ function ViewModel() {
     self.hideSearch = function() {
         self.navBar(!self.navBar());
         if (self.navBar() === true) {
-            $("#map").height("70%");
+            $('#map').height('70%');
         } else {
-            $("#map").height("100%");
+            $('#map').height('100%');
         }
     };
 }
