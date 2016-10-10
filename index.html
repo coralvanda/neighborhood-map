@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport"
     content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
 	<title>Neighborhood Map</title>
 	<link rel="stylesheet" href="static/styles.css">
 </head>
@@ -12,7 +12,7 @@
     <div id="container">
 	    <div id="side-bar" data-bind="slideVisible: navBar">
 		    <div id="search">
-		    	<input id="search-input" type="text"
+		    	<input id="search-input" type="textInput"
 		    	data-bind="value: searchTerm, valueUpdate: 'keyup'"
 		    	placeholder="Search">
 		    </div>
@@ -44,6 +44,6 @@
 	<script src="static/lib/jquery-3.1.1.min.js"></script>
     <script src="static/lib/knockout-3.4.0.js"></script>
     <script src="static/app.js"></script>
-    <script src="static/public.js"></script>
+    <script src="static/private.js"></script>
 </body>
 </html>
