@@ -10,7 +10,7 @@
 
 <body>
     <div id="container">
-	    <div id="side-bar" data-bind="slideVisible: navBar">
+	    <header id="side-bar" data-bind="slideVisible: navBar">
 		    <div id="search">
 		    	<input id="search-input" type="textInput"
 		    	data-bind="textInput: searchTerm"
@@ -32,8 +32,8 @@
 		    		</li>
 		    	</ul>
 		    </div>
-	    </div>
-	    <div id="map"></div>
+	    </header>
+	    <main id="map"></main>
 	    <div id="burger-icon" data-bind="click: hideSearch">
     		<div class="burger"></div>
     		<div class="burger"></div>
