@@ -65,8 +65,12 @@ function ViewModel() {
         var marker = new google.maps.Marker(place);
         marker.setMap(map);
         marker.infoWindow = new google.maps.InfoWindow();
+        marker.infoWindow.addListener('closeclick', function() {
+            marker.setAnimation(null);
+        });
         self.placeList.push(marker);
     });
+
 
     // Computed observable array for populating search results and markers
     self.searchResults = ko.computed(function() {
