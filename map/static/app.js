@@ -138,10 +138,12 @@ function ViewModel() {
                 }
             });
         }
-        if (self.showAddress()) {
-            $('#side-bar').height('35%');
-        } else {
-            $('#side-bar').height('30%');
+        if ($('#side-bar').height() !== $('#container').height()) {
+            if (self.showAddress()) {
+                $('#side-bar').height('35%');
+            } else {
+                $('#side-bar').height('30%');
+            }
         }
     };
 
